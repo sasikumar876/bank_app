@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BANK APPLICATION</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('bank.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            transition: background-color 0.5s ease-in-out;
+        }
+        .container {
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+            margin: 20px;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            opacity: 0;
+            transform: translateY(-100%);
+        }
+        .homeContainer {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        h1 {
+            color: #333;
+            font-size: 28px;
+            text-transform: uppercase;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: calc(100% - 22px);
+            box-sizing: border-box;
+        }
+        input {
+            text-align: left;
+        }
+        button {
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            border: none;
+            width: calc(50% - 10px);
+        }
+        .admin-button {
+            background-color: #f44336;
+        }
+        .admin-button:hover {
+            background-color: #d32f2f;
+        }
+        .customer-button {
+            background-color: #4CAF50;
+        }
+        .customer-button:hover {
+            background-color: #45a049;
+        }
+        .hidden {
+            display: none;
+        }
+        .back-button {
+            background-color: #f44336;
+        }
+        .back-button:hover {
+            background-color: #b22222;
+        }
+        form {
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="homeScreen" class="container homeContainer visible">
+        <h1>BANK APPLICATION</h1>
+        <button class="admin-button" onclick="showPage('adminLogin')">Admin</button>
+        <button class="customer-button" onclick="showPage('customerLogin')">Customer</button>
+    </div>
+
+    <div id="adminLogin" class="container hidden">
+        <h1>Admin Login</h1>
+        <form action="loginServlet" method="POST">
+            <input type="hidden" name="userType" value="admin">
+            <input type="text" name="username" placeholder="Username" aria-label="Username" required><br>
+            <input type="password" name="password" placeholder="Password" aria-label="Password" required><br>
+            <button type="submit">Login</button>
+            <button type="button" class="back-button" onclick="showPage('homeScreen')">Back to Home</button>
+        </form>
+    </div>
+
+    <div id="customerLogin" class="container hidden">
+        <h1>Customer Login</h1>
+        <form action="loginServlet" method="POST">
+            <input type="hidden" name="userType" value="customer">
+            <input type="text" name="username" placeholder="Username" aria-label="Username" required><br>
+            <input type="password" name="password" placeholder="Password" aria-label="Password" required><br>
+            <button type="submit">Login</button>
+            <button type="button" class="back-button" onclick="showPage('homeScreen')">Back to Home</button>
+        </form>
+    </div>
+
+    <div id="authPage" class="container hidden">
+        <h1>Welcome, <span id="userTypeDisplay"></span></h1>
+        <p id="authMessage">Authentication Successful!</p>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            hideAllPages();
+            document.getElementById(pageId).classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById(pageId).classList.add('visible');
+            }, 10); 
+            if (pageId !== 'homeScreen') {
+                document.body.style.backgroundColor = '#f0f0f0';
+                document.body.style.backgroundImage = 'none';
+            } else {
+                document.body.style.backgroundColor = 'transparent';
+                document.body.style.backgroundImage = "url('bank.jpg')";
+            }
+        }
+
+        function hideAllPages() {
+            const containers = document.querySelectorAll('.container');
+            containers.forEach(container => {
+                container.classList.remove('visible');
+                container.classList.add('hidden');
+            });
+        }
+
+        function showAuthPage(userType) {
+            document.getElementById('userTypeDisplay').textContent = userType;
+            document.getElementById('authMessage').textContent = `Authentication Successful!`;
+            showPage('authPage');
+        }
+
+        function logout() {
+            showPage('homeScreen');
+        }
+    </script>
+</body>
+</html>

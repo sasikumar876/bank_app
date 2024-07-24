@@ -1,0 +1,58 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bank Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .form-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .form-container input[type=text] {
+            padding: 8px;
+            margin: 0 10px;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h2>Bank Details</h2>
+
+    <div class="form-container">
+        <form action="GetCustomerDetailsServlet" method="get">
+            <label for="accountNumber">Enter Account Number:</label>
+            <input type="text" id="accountNumber" name="accountNumber" required>
+            <button type="submit">Get Details</button>
+        </form>
+    </div>
+</body>
+</html>
